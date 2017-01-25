@@ -33,17 +33,26 @@ Now the goal is to minimize the distance between what the system predicts and wh
 
 **Main Code:**
 Let’s go through the core code how to do it in Tensorflow
+
 X = tf.placeholder (tf.float32,[None,32,32,1]) (None will hold the number of images batchsize and 1 is for grayscale for RGB we will use 3)
+
 W = tf.variable(tf.zeros([784,10])) 
+
 b = tf.variable(tf.zeros([10]))
+
 We define W and b as a variable because tensorflow will update these values to minimize the distance between the prediction and correct value
 
 Y = tf.nn.softmax(tf.matmul(tf.reshape(X,[-1,784]), W) +b)  - predictions
+
 Y_ = tf.placeholder(tf.float32, [None, 10]) – correct answers
+
 cross_entropy = -tf.reduce_sum(y_ * tf.log(Y))
+
 is_correct = tf.equal(tf.argmax(Y,1) , tf.argmax(Y_,1))
+
 accuracy = tf.reduce_mean(tf.cast(is_correct,tf.float32))
 
-Now we need to optimize:
+**Now we need to optimize:**
+
 Optimizer = tf.train.GradientDecentOptimizer(training Rate)
 Train_step = optimizer.minimize(cross_entropy)
